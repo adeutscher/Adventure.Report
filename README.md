@@ -91,6 +91,10 @@ Upon entering the portal, the player undergoes a map transfer to a second map se
 
 ![image](./screenshots/woodland.png)
 
+Multiple players are able to connect to the server and see each other:
+
+![image](./screenshots/multiplayer.png)
+
 ## Hurdles and Innovations
 
 ### API Template
@@ -219,6 +223,14 @@ private class ToastEndpoint : IHttpEndpoint
 ##### Validators
 
 Though the main request is handled in the main thread, the HTTP server also supports async methods for validators. This could be used for API key validation.
+
+### Other
+
+Other minor things that I think are neat:
+
+* Within the API template, I like [this little snippet](https://github.com/adeutscher/RedShirt.Example.Api/blob/develop/src/RedShirt.Example.Api/Extensions/ConfigurationBuilderExtensions.cs) a lot. I have a version in each of my templates, and it's a massive help in keeping environment options straight in a containerized environment.
+* Migrating to using [syslog](https://github.com/emertechie/SyslogNet) to log in a structured way. Using [syslog-rfc5424](https://github.com/EasyPost/syslog-rfc5424-parser) as a receiver.
+
 
 ## Near-Future Hurdles
 
