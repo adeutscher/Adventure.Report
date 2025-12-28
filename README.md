@@ -74,6 +74,7 @@ So far, I have defined the following APIs:
 * APIs were written in AspNetCore, due to my familiarity with the framework from work.
 * I chose Unity3D as my game engine due to its scripts being written in C#.
 * Within Unity3D, I settled on [FishNet](https://assetstore.unity.com/packages/tools/network/fishnet-networking-evolved-207815) as my network implementation. I latched onto the concept of Broadcasts within FishNet being in line with my event bus plans (see below)
+* All of the infrastructure is containerized, and local testing is done through `docker compose`.
 
 ## Game Outcomes
 
