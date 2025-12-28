@@ -71,10 +71,11 @@ So far, I have defined the following APIs:
 
 ## Technology
 
-* APIs were written in AspNetCore, due to my familiarity with the framework from work.
+* APIs were written in ASP.NET Core, due to my familiarity with the framework from work.
 * I chose Unity3D as my game engine due to its scripts being written in C#.
 * Within Unity3D, I settled on [FishNet](https://assetstore.unity.com/packages/tools/network/fishnet-networking-evolved-207815) as my network implementation. I latched onto the concept of Broadcasts within FishNet being in line with my event bus plans (see below)
 * All of the infrastructure is containerized, and local testing is done through `docker compose`.
+* Infrastructure is managed through Terraform. The main focus for the moment is just on making things work locally, so for the moment this is just for defining repositories and build pipelines for NuGet packages.
 
 ## Game Outcomes
 
