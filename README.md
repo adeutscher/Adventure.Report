@@ -170,7 +170,7 @@ var serviceProvider = new ServiceEnvelope()
 
 #### Problem
 
-I lean towards using Dapper in my database work to allow for more precise control over queries. When devloping APIs, this preference became slightly impractical for this project for a number of reasons:
+I lean towards using Dapper in my database work to allow for more precise control over queries. When developing APIs, this preference became slightly impractical for this project for a number of reasons:
 
 * Dealing with a large number of new tables
 * New tables have a large number of individual columns.
@@ -188,7 +188,7 @@ In order to not split between two database libraries, I created a base class tha
 While not pictured in my architecture diagram, it wouldn't be out of the question for other microservices to need to reach out to contact the main game servers. For example:
 
 * Delivering messages to a player
-* Pulling live information on in-game elements (not just where they are in the database)
+* Pulling live information on in-game elements (more up-to-date than where they are in the database)
 
 #### Solution
 
