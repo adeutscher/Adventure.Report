@@ -15,7 +15,7 @@ I chose to phrase this as a research project because the massive scope involved 
 If full completion is distant and unreachable, my questions become:
 
 * How far *can* I take this project?
-* How can I keep my structuring manageable?
+* How can I keep my structuring manageable? Not just of my main game engine project, but also all of the supporting projects?
 * What would my infrastructure look like if I had to support a large number of players?
 
 Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured out ways through. These solutions could be applied to multiple types of projects, not just an MMO framework.
@@ -95,7 +95,6 @@ Upon entering the portal, the player undergoes a map transfer to a second map se
 
 A key part of developing similar microservices is a template to easily spin up new instances. I developed [this](https://github.com/adeutscher/RedShirt.Example.Api) template to quickly spin up a basic AspNetCore API. The edge that this template has over a basic Visual Studio or Rider template is that it is set up with [NSwag](https://github.com/RicoSuter/NSwag). Nswag parses through the API's endpoints to generate an OpenAPI document, and then uses that API document to generate an interop project that can be exported as a NuGet package for other C# consumers.
 
-
 ### Event-Based Architecture
 
 For this project, I had a few fundemental problems that were solve by introducing my own event bus implementation.
@@ -105,7 +104,7 @@ For this project, I had a few fundemental problems that were solve by introducin
 * My existing API template uses Swagger to describe my APIs and generate client code. While this automation is a net timesaver and error-preventer on its own, the methods themselves are all async.
 * Other libraries may involve async code, such as libraries for safely storing API keys in a parameter store such as Vault or Amazon SSM.
 * I did not want to spend resources spinning up a background thread for each API request.
-* Once I had information from an API, acting on it often needed to be done in a foreground thread due to the Unity engine.
+* Once I had information from an API, acting on it (e.g. spawning an object) often needs to be done in a foreground thread due to the Unity engine.
 
 #### Requirements
 
