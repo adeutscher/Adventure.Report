@@ -146,6 +146,10 @@ public class AsyncEventHandler : IAsyncBusEventHandler<AsyncEvent>
 
 Most communication within the servers and clients is done through this library.
 
+#### Spawning Objects
+
+See [here](./spawning.md) for more information on spawning objects through the event system.
+
 ##### Automation
 
 One of the most frequent problems when debugging issues was forgetting to register a handler after listening, so I developed a series of methods that use reflection to detect the necessary handlers and register them for dependency injection and event handling.
