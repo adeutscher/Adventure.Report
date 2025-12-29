@@ -97,6 +97,8 @@ Multiple players are able to connect to the server and see each other:
 
 ## Hurdles and Innovations
 
+This section documents hurdles some noteworthy hurdles that I encountered and how I worked around them. For ponderings on some in-progress hurdles that haven't quite been cleeared, see the [Adventure.Planning](https://github.com/adeutscher/Adventure.Planning) repository.
+
 ### API Template
 
 A key part of developing similar microservices is a template to easily spin up new instances. I developed [this](https://github.com/adeutscher/RedShirt.Example.Api) template to quickly spin up a basic AspNetCore API. The edge that this template has over a basic Visual Studio or Rider template is that it is set up with [NSwag](https://github.com/RicoSuter/NSwag). Nswag parses through the API's endpoints to generate an OpenAPI document, and then uses that API document to generate an interop project that can be exported as a NuGet package for other C# consumers.
