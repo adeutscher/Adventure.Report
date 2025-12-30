@@ -196,12 +196,12 @@ In order to not split between two database libraries, I created a base class tha
 
 ### HTTP Server
 
-#### Problem
+#### Problems
 
-While not pictured in my architecture diagram, it wouldn't be out of the question for other microservices to need to reach out to contact the main game servers. For example:
-
-* Delivering messages to a player
-* Pulling live information on in-game elements (more up-to-date than where they are in the database)
+* The baseline server lacks debug utilities.
+* While not pictured in my architecture diagrams, it wouldn't be out of the question for other microservices to need to reach out to contact the main game servers. For example:
+    * Delivering messages to a player
+    * Pulling live information on in-game elements (more up-to-date than where they are in the database)
 
 #### Solution
 
@@ -225,6 +225,19 @@ private class ToastEndpoint : IHttpEndpoint
     }
 }
 ```
+
+##### Practical Application
+
+A series of endpoints are currently being leveraged to simplify debugging of Map servers. These debug endpoints are configurable so that they can be turned off entirely outside of a development environment.
+
+Examples of some initial scripts:
+
+* List active map instances on a Map server.
+* List active player characters on a Map server.
+* List active Portal resources on a Map server.
+* Teleport a particular player character (either within the same map instance or to another map instance)
+* Dynamically update the location/configuration of database-driven Portal resources.
+
 
 ##### Validators
 
