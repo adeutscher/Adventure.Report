@@ -226,6 +226,8 @@ private class ToastEndpoint : IHttpEndpoint
 }
 ```
 
+My adaptation of the HTTP server can be found here: [BasicHttpServer](https://github.com/adeutscher/BasicHttpServer)
+
 ##### Practical Application
 
 A series of endpoints are currently being leveraged to simplify debugging of Map servers. These debug endpoints are configurable so that they can be turned off entirely outside of a development environment.
@@ -238,7 +240,6 @@ Examples of some initial scripts:
 * Teleport a particular player character (either within the same map instance or to another map instance)
 * Dynamically update the location/configuration of database-driven Portal resources.
 
-
 ##### Validators
 
 Though the main request is handled in the main thread, the HTTP server also supports async methods for validators. This could be used for API key validation.
@@ -249,7 +250,6 @@ Other minor things that I think are neat:
 
 * Within the API template, I like [this little snippet](https://github.com/adeutscher/RedShirt.Example.Api/blob/develop/src/RedShirt.Example.Api/Extensions/ConfigurationBuilderExtensions.cs) a lot. I have a version in each of my templates, and it's a massive help in keeping environment options straight in a containerized environment.
 * Migrating to using [syslog](https://github.com/emertechie/SyslogNet) to log in a structured way. Using [syslog-rfc5424](https://github.com/EasyPost/syslog-rfc5424-parser) as a receiver.
-
 
 ## Near-Future Hurdles
 
