@@ -257,6 +257,5 @@ Being a research project of infinite scope, there will never be a shortage of To
 
 * Experimenting with different transport implementations within FishNet.
 * Assigning more properties to a character object
-* Saving a character's data back to the database via the API
 * Developing a rough UI framework to support something like a logout button.
 * Applying the `Utility.Events` library to a more tightly-scoped project.
