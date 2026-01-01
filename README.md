@@ -110,7 +110,7 @@ For this project, I had a few fundemental problems that were solve by introducin
 #### Problems
 
 * My existing API template uses Swagger to describe my APIs and generate client code. While this automation is a net timesaver and error-preventer on its own, the methods themselves are all async.
-    * I could set a configuration option to generate sync methods, but that async is preferred.
+    * I could set a configuration option to generate sync methods, but async is preferred. It also wouldn't be advisable to make HTTP calls that could take several milliseconds at best in the foreground thread.
 * Other libraries may involve async code, such as libraries for safely storing API keys in a parameter store such as Vault or Amazon SSM. Unlike NSwag, there's not necessarily an option to enable sync methods for these ones.
 * I did not want to spend resources spinning up a background thread for each API request.
 * Once I had information from an API, acting on it (e.g. spawning an object) often needs to be done in a foreground thread due to the Unity engine.
