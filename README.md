@@ -180,20 +180,33 @@ var serviceProvider = new ServiceEnvelope()
     .BuildServiceProvider();
 ```
 
-### Dapper Database Helper
+### API Automation
 
-#### Problem
+#### Problem 1
 
 I lean towards using Dapper in my database work to allow for more precise control over queries. When developing APIs, this preference became slightly impractical for this project for a number of reasons:
 
 * Dealing with a large number of new tables
-* New tables have a large number of individual columns.
+* New tables could have a large number of individual columns.
 * New tables weren't necessarily set in stone
 * Large number of basic CRUD queries/commands made for slow turnaround with multiple queries.
 
-#### Solution
+#### Solution 1 (Dapper Database Helper)
 
 In order to not split between two database libraries, I created a base class that would perform my own custom object mapping ([link](https://github.com/adeutscher/DapperDatabaseHelper)). It's a step towards EntityFramework in that it automatically constructs queries for me, but on my own terms.
+
+#### Problem 2
+
+The custom object mapping in Dapper was a step in the right direction for speed, but it still left a lot of overhead to do:
+
+* Each table needs a service-layer to implement minor business logic.
+* Each table repository needs its own search implentation. Custom object mapping was never made to cover the search feature.
+* Though the services and repositories are similar to one another, copy-pasting them creates drift and eventual inconsistency between implementation.
+* I began to pivot towards smaller, normalized database tables describing attributes of a subject rather than one large table. This multiplied these problems by creating a demand for many tables at once.
+
+#### Solution 2 (Deterministic Source Generators)
+
+The solution to this problem was to implement a deterministic [Source Generator](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Implementing a source generator allowed me to build entire service classes and repositories off of a single data type declaration.
 
 ### HTTP Server
 
