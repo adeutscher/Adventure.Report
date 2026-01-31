@@ -95,6 +95,10 @@ Multiple players are able to connect to the server and see each other:
 
 ![image](./screenshots/multiplayer.png)
 
+I have implemented a basic inventory UI and spell bar:
+
+![image](./screenshots/ui-2026-01-31.png)
+
 ## Hurdles and Innovations
 
 This section documents hurdles some noteworthy hurdles that I encountered and how I worked around them. For ponderings on some in-progress hurdles that haven't quite been cleeared, see the [Adventure.Planning](https://github.com/adeutscher/Adventure.Planning) repository.
