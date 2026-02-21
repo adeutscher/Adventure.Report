@@ -1,16 +1,16 @@
 # "Adventure": Game Framework Research Project
 
-This repository is an ongoing report on my research project. My project is aimed at making a framework and workflow that could potentially support a large-scale game such as an MMO.
+This repository is an ongoing report on my research project. My project is aimed at making a framework and workflow that could to support a networked RPG.
 
-## Why MMOs?
+## Why RPGs?
 
-I've always wondered about the infrastructure behind large-scale games such as World of Warcraft. This fueled my own interest in game development, though my main field of work is not within games.
+I've always wondered about the infrastructure behind large-scale RPG games such as World of Warcraft. This fueled my own interest in game development, though my main field of work is not within games.
 
 My career has pointed me towards developing a skillset that supports DevOps and microservices, so I wanted to see how I could apply those skills to this research project.
 
 ## Why a "Research Project"?
 
-I chose to phrase this as a research project because the massive scope involved practically guaranteed that this project could never be completed. MMOs are complex and multifaceted projects requiring a wide range of skillsets, and a project completed by a single developer (even one working on the project full-time) is going to be an exceedingly rare thing.
+I chose to phrase this as a research project because the massive scope involved practically guaranteed that this project could never be completed. Networked RPGs like MMOs are complex and multifaceted projects requiring a wide range of skillsets, and a project completed by a single developer (even one working on the project full-time) is going to be an exceedingly rare thing.
 
 If full completion is distant and unreachable, my questions become:
 
@@ -18,7 +18,7 @@ If full completion is distant and unreachable, my questions become:
 * How can I keep my structuring manageable? Not just of my main game engine project, but also all of the supporting projects?
 * What would my infrastructure look like if I had to support a large number of players?
 
-Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured out ways through. These solutions could be applied to multiple types of projects, not just an MMO framework.
+Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured out ways through. These solutions could be applied to multiple types of projects, not just an RPG framework.
 
 ## Architecture
 
