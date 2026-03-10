@@ -20,7 +20,38 @@ If full completion is distant and unreachable, my questions become:
 
 Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured out ways through. These solutions could be applied to multiple types of projects, not just an RPG framework.
 
+### The Uncommercializable Game
+
+As it stands, I don't believe that this hobby project will ever be directly able to be commercialized as a solo operation. The central reason for this is again that networked RPGs, and especially MMOs, are massive undertakings.
+
+On top of being the sole system developer, below are just a few of the different hats that one would have to juggle in order to make the game run smoothly:
+
+* Community Manager
+* Game Master
+* Financial Manager
+* Content Designer (within the existing framework, to say nothing of coding new features)
+* Legal (and I am not a lawyer)
+
+Putting on one hat would bring progress on the other hats more or less to a screeching halt. In order to operate at any scale, delegation is required.
+
+I don't believe that AI is a solution to any of these head-count problems. Being as generous as I can be to AI and assuming that its training data is ethically sourced with respect to licensing, it is trained on a wide variety of information and outputs an average. It struggles on edge cases. It will make mistakes, and people will notice. I would rather that this project of mine have human problems than AI problems.
+
+#### A Middle Path
+
+A possible middle ground I've considered is making the game available online and setting up a KoFi or similar to support the hosting costs. However, this requires having an actual game to release. The framework is a __*long*__ way from being in a state where I'd feel comfortable even attempting this. So hosting and any sort of public release are a distant ambition for the foreseeable future.
+
+#### The Silver Lining
+
+All that being said, the situation has upsides. Above all else, this project is an excellent learning opportunity for me. With every new feature, I learn new things about game development and Unity to better implement my plans.
+
+The project can yield more than experience as well. I like to view this project as a structure of LEGO bricks. The proverbial bricks are currently being built into a networked RPG, but they can also be repurposed into more tightly-scoped game projects that can be released without the same infrastructure demands.
+
 ## Architecture
+
+The architecture for this project was made with two key ideas in mind:
+
+* A networked RPG lives on being scalable. The architecture must be built so that there there is more than one game server involved to distribute workload.
+* The second point is focused on my goal of structuring this project as though it could be scaled to a group. Modern game engines accelerate development to make this project remotely viable, but modern game engines come with complexity and possible licensing costs. On top of this, it shouldn't be a requirement to have knowledge of a game engine for someone to contribute to the framework. Information storage should be removed from the game engine as much as possible, and tools should be made to manipulate the data. The game server(s) and client should be just the last stop along this pipeline.
 
 ### Main Builds
 
@@ -37,7 +68,9 @@ The game project itself is divided into 4 main builds:
 * Map: Hosts the game world for a given realm
     * Takes on the duties of handling the actual game world
     * Made because the realm is assumed to be the immediate bottleneck to supporting large numbers of players on a given realm.
-    * There can be multiple Map servers supporting Realm, which is encouraged.
+    * There can be multiple Map servers supporting a given Realm, which is encouraged.
+
+Building on this, nothing prevents there from being additional supporting servers that the Map servers rely on as they do the Realm. There isn't any need for that at the moment, however.
 
 ### Supporting Infrastructure
 
@@ -64,16 +97,19 @@ So far, I have defined the following APIs:
 
 * Directory API
     * A proverbial phone book that serves/updates a list of available servers.
+    * Used by Login and Realm servers.
 * World API
     * Contains global definitions for the world that are static across all realm clusters.
+    * Used by Realm and Map servers.
 * Realm API
     * Contains realm-specific definitions such as character data.
+    * Used by Realm and Map servers.
 
 ## Technology
 
 * APIs were written in ASP.NET Core, due to my familiarity with the framework from work.
 * I chose Unity3D as my game engine due to its scripts being written in C#.
-* Within Unity3D, I settled on [FishNet](https://assetstore.unity.com/packages/tools/network/fishnet-networking-evolved-207815) as my network implementation. I latched onto the concept of Broadcasts within FishNet being in line with my event bus plans (see below)
+* Within Unity3D, I settled on [FishNet](https://assetstore.unity.com/packages/tools/network/fishnet-networking-evolved-207815) as my network implementation. In particular, I latched onto the concept of Broadcasts within FishNet being in line with my event bus plans (see below)
 * All of the infrastructure is containerized, and local testing is done through `docker compose`.
 * Infrastructure is managed through Terraform. The main focus for the moment is just on making things work locally, so for the moment this is just for defining repositories and build pipelines for NuGet packages.
 
@@ -116,7 +152,7 @@ For this project, I had a few fundemental problems that were solve by introducin
 * My existing API template uses Swagger to describe my APIs and generate client code. While this automation is a net timesaver and error-preventer on its own, the methods themselves are all async.
     * I could set a configuration option to generate sync methods, but async is preferred. It also wouldn't be advisable to make HTTP calls that could take several milliseconds at best in the foreground thread.
 * Other libraries may involve async code, such as libraries for safely storing API keys in a parameter store such as Vault or Amazon SSM. Unlike NSwag, there's not necessarily an option to enable sync methods for these ones.
-* I did not want to spend resources spinning up a background thread for each API request.
+* I did not want to spend resources spinning up a background thread for each individual API request.
 * Once I had information from an API, acting on it (e.g. spawning an object) often needs to be done in a foreground thread due to the Unity engine.
 
 #### Requirements
