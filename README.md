@@ -4,13 +4,13 @@ This repository is an ongoing report on my research project. My project is aimed
 
 ## Why RPGs?
 
-I've always wondered about the infrastructure behind large-scale RPG games such as World of Warcraft. This fueled my own interest in game development, though my main field of work is not within games.
+I've always wondered about the infrastructure behind large-scale RPG games such as World of Warcraft. This fueled my own general interest in game development, though my main field of work has been within supporting a SaaS platform.
 
 My career has pointed me towards developing a skillset that supports DevOps and microservices, so I wanted to see how I could apply those skills to this research project.
 
 ## Why a "Research Project"?
 
-I chose to phrase this as a research project because the massive scope involved practically guaranteed that this project could never be completed. Networked RPGs like MMOs are complex and multifaceted projects requiring a wide range of skillsets, and a project completed by a single developer (even one working on the project full-time) is going to be an exceedingly rare thing.
+I chose to phrase this as a research project because the massive scope involved practically guaranteed that this project could never be completed as a solo project. Networked RPGs like MMOs are complex and multifaceted projects requiring a wide range of skillsets, and a project completed by a single developer (even one working on the project full-time) is going to be an exceedingly rare thing.
 
 If full completion is distant and unreachable, my questions become:
 
@@ -18,40 +18,18 @@ If full completion is distant and unreachable, my questions become:
 * How can I keep my structuring manageable? Not just of my main game engine project, but also all of the supporting projects?
 * What would my infrastructure look like if I had to support a large number of players?
 
-Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured out ways through. These solutions could be applied to multiple types of projects, not just an RPG framework.
+Instead of judging off of overall completion, I consider this project to be a success already because of the technical hurdles that I've already run into and figured sustainable solutions for. These solutions could be applied to multiple types of projects, not just an RPG framework.
 
-### The Uncommercializable Game
+## Organization
 
-As it stands, I don't believe that this hobby project will ever be directly able to be commercialized as a solo operation. The central reason for this is again that networked RPGs, and especially MMOs, are massive undertakings.
-
-On top of being the sole system developer, below are just a few of the different hats that one would have to juggle in order to make the game run smoothly:
-
-* Community Manager
-* Game Master
-* Financial Manager
-* Content Designer (within the existing framework, to say nothing of coding new features)
-* Legal (and I am not a lawyer)
-
-Putting on one hat would bring progress on the other hats more or less to a screeching halt. In order to operate at any scale, delegation is required.
-
-I don't believe that AI is a solution to any of these head-count problems. Being as generous as I can be to AI and assuming that its training data is ethically sourced with respect to licensing, it is trained on a wide variety of information and outputs an average. It struggles on edge cases. It will make mistakes, and people will notice. I would rather that this project of mine have human problems than AI problems.
-
-#### A Middle Path
-
-A possible middle ground I've considered is making the game available online and setting up a KoFi or similar to support the hosting costs. However, this requires having an actual game to release. The framework is a __*long*__ way from being in a state where I'd feel comfortable even attempting this. So hosting and any sort of public release are a distant ambition for the foreseeable future.
-
-#### The Silver Lining
-
-All that being said, the situation has upsides. Above all else, this project is an excellent learning opportunity for me. With every new feature, I learn new things about game development and Unity to better implement my plans.
-
-The project can yield more than experience as well. I like to view this project as a structure of LEGO bricks. The proverbial bricks are currently being built into a networked RPG, but they can also be repurposed into more tightly-scoped game projects that can be released without the same infrastructure demands.
+The broad goal of making a game platform such as for an MMO is ambitious, to say the least. In order to make progress on this goal it was necessary to break down the project into manageable individual pieces. To accomplish this, I planned out my project as though it were for an agile team. Epics represented broad goals for a feature, user stories a stage towards that goal, and individual tasks describing more granular efforts towards that stage (usually drawn along code repository lines). Being a personal project, I designated each month as a sprint rather than setting up a specific cadence.
 
 ## Architecture
 
 The architecture for this project was made with two key ideas in mind:
 
 * A networked RPG lives on being scalable. The architecture must be built so that there there is more than one game server involved to distribute workload.
-* The second point is focused on my goal of structuring this project as though it could be scaled to a group. Modern game engines accelerate development to make this project remotely viable, but modern game engines come with complexity and possible licensing costs. On top of this, it shouldn't be a requirement to have knowledge of a game engine for someone to contribute to the framework. Information storage should be removed from the game engine as much as possible, and tools should be made to manipulate the data. The game server(s) and client should be just the last stop along this pipeline.
+* The second point is focused on my goal of structuring this project as though it could be scaled to be a team effort. Modern game engines accelerate development to make this project remotely viable, but modern game engines come with complexity and possible licensing costs. On top of this, it shouldn't be a requirement to have knowledge of a game engine for someone to contribute to the framework. Information storage should be removed from the game engine as much as possible, and tools should be made to manipulate the data. The game server(s) and client should be just the last stop along this pipeline.
 
 ### Main Builds
 
@@ -78,10 +56,10 @@ These main builds need supporting services and connective tissue. Some if the im
 
 * The supporting services should be flexible so that I can pivot my implementations if need be.
 * For a project at this scale, at least one database technology will be required.
-* To reduce game engine project complexity, no game project should communicate directly with a database. Database communication should instead go through APIs
+* To reduce game engine project complexity, no game project should communicate directly with a database. Database communication should instead go through APIs.
 * There might not be one definitive Login server, so communication between a Realm(s) and the Login server(s) should use an intermediate API as well
 * The realm cluster servers should have common cache for use when transferring characters across maps.
-* The Client is untrusted, so it should not have direct access to any internal APIs
+* The Client is untrusted, so it clearly should not have direct access to any internal APIs.
 
 These considerations led me to the following overall overall structure:
 
@@ -228,25 +206,30 @@ I lean towards using Dapper in my database work to allow for more precise contro
 
 * Dealing with a large number of new tables
 * New tables could have a large number of individual columns.
-* New tables weren't necessarily set in stone
 * Large number of basic CRUD queries/commands made for slow turnaround with multiple queries.
+* New tables weren't necessarily set in stone. Investing time in making these had an impact on both project velocity and morale.
+
+These problems are not entirely tied to my use of Dapper. Even were I using an established ORM such as Entity Framework, I would need to come up with implementations to translate API requests into actionable queries.
 
 #### Solution 1 (Dapper Database Helper)
 
-In order to not split between two database libraries, I created a base class that would perform my own custom object mapping ([link](https://github.com/adeutscher/DapperDatabaseHelper)). It's a step towards EntityFramework in that it automatically constructs queries for me, but on my own terms.
+In order to not split between two database libraries, I created a base class that would perform my own custom object mapping ([link](https://github.com/adeutscher/DapperDatabaseHelper)). It's a step towards an ORM such as EntityFramework in that it automatically constructs queries for me, but on my own terms.
 
 #### Problem 2
 
 The custom object mapping in Dapper was a step in the right direction for speed, but it still left a lot of overhead to do:
 
-* Each table needs a service-layer to implement minor business logic.
+* Each table needs a service layer to implement business logic.
 * Each table repository needs its own search implentation. Custom object mapping was never made to cover the search feature.
 * Though the services and repositories are similar to one another, copy-pasting them creates drift and eventual inconsistency between implementation.
 * I began to pivot towards smaller, normalized database tables describing attributes of a subject rather than one large table. This multiplied these problems by creating a demand for many tables at once.
+* As with my original problem, implementation of these tables still took time.
 
 #### Solution 2 (Deterministic Source Generators)
 
 The solution to this problem was to implement a deterministic [Source Generator](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Implementing a source generator allowed me to build entire service classes and repositories off of a single data type declaration.
+
+I made some aspects of the source generation configurable. For example, if the specific demands of a service layer were off-spec then I could disable service generation and use the previous generated code as a convenient baseline to implement custom requirements.
 
 ### HTTP Server
 
@@ -304,6 +287,30 @@ Other minor things that I think are neat:
 
 * Within the API template, I like [this little snippet](https://github.com/adeutscher/RedShirt.Example.Api/blob/develop/src/RedShirt.Example.Api/Extensions/ConfigurationBuilderExtensions.cs) a lot. I have a version in each of my templates, and it's a massive help in keeping environment options straight in a containerized environment.
 * Migrating to using [syslog](https://github.com/emertechie/SyslogNet) to log in a structured way. Using [syslog-rfc5424](https://github.com/EasyPost/syslog-rfc5424-parser) as a receiver.
+
+## The Uncommercializable Game
+
+As it stands, I don't believe that this hobby project will ever be directly able to be commercialized as a solo operation. The central reason for this is again that networked RPGs, and especially MMOs, are massive undertakings.
+
+On top of being the sole system developer, below are just a few of the different hats that one would have to juggle in order to make the game run smoothly:
+
+* Community Manager
+* Game Master
+* Financial Manager
+* Content Designer (within the existing framework, to say nothing of coding new features)
+* Legal (and I am not a lawyer)
+
+As the sole developer, putting on one hat would bring progress on the other hats more or less to a screeching halt. In order to operate at any scale, delegation and collaboration with others required.
+
+### A Middle Path
+
+A possible middle ground I've considered is making the game available online and setting up a KoFi or similar to support the hosting costs. However, this requires having an actual game to release. The framework is a __*long*__ way from being in a state where I'd feel comfortable even attempting this. So hosting and any sort of public release are a distant ambition for the foreseeable future.
+
+### The Silver Lining
+
+All that being said, the situation has upsides. Above all else, this project is an excellent learning opportunity for me. With every new feature, I learn new things about game development and Unity to better implement my plans.
+
+The project can yield more than experience as well. I like to view this project as a structure of LEGO bricks. The proverbial bricks are currently being built into a networked RPG, but they can also be repurposed into more tightly-scoped game projects that can be released without the same infrastructure demands.
 
 ## Near-Future Hurdles
 
