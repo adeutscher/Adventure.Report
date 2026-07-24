@@ -6,7 +6,7 @@ This repository is an ongoing report on my research project. My project is aimed
 
 I've always wondered about the infrastructure behind large-scale RPG games such as World of Warcraft. This fueled my own general interest in game development, though my main field of work has been within supporting a SaaS platform.
 
-My career has pointed me towards developing a skillset that supports DevOps and microservices, so I wanted to see how I could apply those skills to this research project.
+My career has pointed me towards developing a SaaS skillset that supports APIs, microservices, and DevOps. I wanted to see how I could apply those skills to this research project.
 
 ## Why a "Research Project"?
 
@@ -209,7 +209,7 @@ I lean towards using Dapper in my database work to allow for more precise contro
 * Large number of basic CRUD queries/commands made for slow turnaround with multiple queries.
 * New tables weren't necessarily set in stone. Investing time in making these had an impact on both project velocity and morale.
 
-These problems are not entirely tied to my use of Dapper. Even were I using an established ORM such as Entity Framework, I would need to come up with implementations to translate API requests into actionable queries.
+These problems are not entirely tied to my use of Dapper. Even if I were using an established ORM such as Entity Framework, I would need to come up with implementations to translate API requests into actionable queries.
 
 #### Solution 1 (Dapper Database Helper)
 
@@ -229,7 +229,9 @@ The custom object mapping in Dapper was a step in the right direction for speed,
 
 The solution to this problem was to implement a deterministic [Source Generator](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Implementing a source generator allowed me to build entire service classes and repositories off of a single data type declaration.
 
-I made some aspects of the source generation configurable. For example, if the specific demands of a service layer were off-spec then I could disable service generation and use the previous generated code as a convenient baseline to implement custom requirements.
+I made some aspects of the source generation configurable by way of control attributes. For example, if the specific demands of a service layer were off-spec then I could disable service generation and use the previous generated code as a convenient baseline to implement custom requirements.
+
+Doing this with deterministic source generation meant that fewer individual changes needed to be implemented and reviewed. A modern alternative might be to accelerate development on an endpoint using AI tooling, but even with a perfectly-curated set of guidelines to generate the repository and service layers the larger amount of output would still be subject to human review for possible errors. A tailor-made approach based on a deterministic system is more reliable for consistency than a probabilistic system.
 
 ### HTTP Server
 
