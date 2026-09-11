@@ -213,7 +213,9 @@ These problems are not entirely tied to my use of Dapper. Even if I were using a
 
 #### Solution 1 (Dapper Database Helper)
 
-In order to not split between two database libraries, I created a base class that would perform my own custom object mapping ([link](https://github.com/adeutscher/DapperDatabaseHelper)). It's a step towards an ORM such as EntityFramework in that it automatically constructs queries for me, but on my own terms.
+In order to not split between two database libraries, I created a base class that would perform my own custom object mapping. It's a step towards an ORM such as Entity Framework in that it automatically constructs queries for me, but on my own terms.
+
+The Dapper Database Helpers were originally published as their own project ([link](https://github.com/adeutscher/DapperDatabaseHelper)), but have since been rolled into the [Example API Template](https://github.com/adeutscher/RedShirt.Example.Api/) as a subproject ([link](https://github.com/adeutscher/RedShirt.Example.Api/tree/develop/src/RedShirt.Example.Api.DataStores.Common.DapperMySql)).
 
 #### Problem 2
 
@@ -319,6 +321,6 @@ The project can yield more than experience as well. I like to view this project 
 Being a research project of infinite scope, there will never be a shortage of ToDo items. However, these are some immediate examples of where I might take the project in the near future:
 
 * Experimenting with different transport implementations within FishNet.
-* Assigning more properties to a character object
+* Assigning more properties to a character object.
 * Developing a rough UI framework to support something like a logout button.
 * Applying the `Utility.Events` library to a more tightly-scoped project.
