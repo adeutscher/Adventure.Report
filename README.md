@@ -235,6 +235,8 @@ I made some aspects of the source generation configurable by way of control attr
 
 Doing this with deterministic source generation meant that fewer individual changes needed to be implemented and reviewed. A modern alternative might be to accelerate development on an endpoint using AI tooling, but even with a perfectly-curated set of guidelines to generate the repository and service layers the larger amount of output would still be subject to human review for possible errors. A tailor-made approach based on a deterministic system is more reliable for consistency than a probabilistic system.
 
+Source generation can also be found in the [API template](https://github.com/adeutscher/RedShirt.Example.Api): [RedShirt.Example.Api.DataStores.Analyzers.DapperMySql.Generation](https://github.com/adeutscher/RedShirt.Example.Api/tree/develop/src/RedShirt.Example.Api.DataStores.Analyzers.DapperMySql.Generation)
+
 ### HTTP Server
 
 #### Problems
